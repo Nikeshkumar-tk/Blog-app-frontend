@@ -9,7 +9,7 @@ import './Header.css'
     </div>
     <img
       className="headerImg"
-      src="https://newevolutiondesigns.com/images/freebies/tech-wallpaper-8.jpg"
+      src="https://i.pinimg.com/564x/7d/eb/74/7deb74172032e24dc1f0af56be233dc5.jpg"
       alt=""
     />
   </div>

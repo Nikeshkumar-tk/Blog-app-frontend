@@ -1,26 +1,92 @@
+import { useContext, useEffect } from 'react'
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import './SinglePost.css'
+import axios from 'axios'
+import { Context } from '../../context/Context';
 
 const SinglePost = () => {
+  const location=useLocation()
+  const path=location.pathname.split("/")[2]
+
+  const [fetchedPost,setfetchedPost]=useState({})
+const {user}=useContext(Context)
+const [title,setTitle]=useState("")
+const [updateMode,setUpdateMode]=useState(false)
+const [desc,setDesc]=useState("")
+  
+  useEffect(()=>{
+    const getPost=async()=>{
+      const res=await axios.get("/posts/"+path)
+      console.log(res)
+     
+      setfetchedPost(res.data)
+      setTitle(res.data.title)
+      setDesc(res.data.desc)
+     
+      
+    }
+    getPost();
+  },[path])
+  const handleDelete=async()=>{
+try{
+await axios.delete("/posts/"+path,{data:{username:user.username}})
+window.location.replace("/")
+}catch(err){
+  console.log(err)
+
+}
+
+}
+const handleUpdate=async()=>{
+  try{
+
+    const res=await axios.put(`/posts/${fetchedPost._id}`,{username:user.username,title:title,desc:desc})
+    console.log(res)
+  }catch(err){
+    console.log(err)
+  }
+  window.location.reload()
+
+}
+  
   return (
     <div className='singlePost'>
-        <div className="siglePostWrapper">
-            <img src="https://www.pixelstalk.net/wp-content/uploads/2016/06/High-Tech-Background-HD.jpg" alt="" className='singlePostImg' />
-            
-            <h1 className='singlePostTitle'>Lorem ipsum dolor sit amet.
-                <div className="singlePostEdit">
-                <i class="singlePostIcon fa-solid fa-pen-to-square"></i>
-                <i class="singlePostIcon fa-solid fa-trash"></i>
+        <div className="singlePostWrapper">
+            <img src={fetchedPost.photo} alt="" className='singlePostImg' />
+            {updateMode?<input type="text" value={title} className="singlePostTitleInput" onChange={(e)=>setTitle(e.target.value)} autoFocus></input>:(
+
+
+              
+              <h1 className='singlePostTitle'>{fetchedPost.title}
+            {fetchedPost.username===user?.username&&(
+              
+              
+              <div className="singlePostEdit">
+                <i class="singlePostIcon fa-solid fa-pen-to-square" onClick={()=>setUpdateMode(true)}></i>
+                <i class="singlePostIcon fa-solid fa-trash" onClick={handleDelete}></i>
                 
                 </div>
+            )}
             </h1>
+                  )}
             <div className="singlePostInfo">
-                <span className="singlePostAuthor"><b>NIKESH</b></span>
-                <span className="singlePostdATE"><b>5 HOUR AGO</b></span>
+                <span className="singlePostAuthor">
+                  <Link to={`/?user=${fetchedPost.username}`} className="link">
+                  
+                  <b>{fetchedPost.username}</b>
+                  </Link>
+                  </span>
+                <span className="singlePostDate"><b>{new Date(fetchedPost.createdAt).toDateString()}</b></span>
             </div>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt consequuntur id quia error nihil nam ex unde beatae eaque enim consequatur, rerum, eum, asperiores debitis fugiat minus praesentium laboriosam aperiam? Facilis, temporibus reiciendis minus nisi fugiat iusto id perspiciatis placeat optio magni, aperiam asperiores perferendis consectetur, suscipit quasi cupiditate earum ex tempora quidem illo ut necessitatibus aspernatur. Quo earum expedita illo, nostrum necessitatibus facere quia blanditiis cumque nihil aspernatur, architecto veritatis omnis harum! Placeat tempore repellat dolorem quia neque maxime quos totam necessitatibus consectetur vero incidunt odio voluptatem provident repudiandae sunt, officia soluta molestias temporibus fugiat nobis maiores modi quasi dolor. Ad hic quasi consequatur magni, aliquam itaque eum dolorem perspiciatis minima accusantium porro nisi magnam! Sint consequatur ipsum blanditiis! Totam qui nulla fugit quis sapiente labore voluptas error facilis ducimus, explicabo repudiandae, ratione voluptatum modi veniam consequuntur odio ipsum velit! Neque fugit voluptatem enim totam quibusdam fuga provident explicabo.
+            {updateMode?<textarea className='singlePostDescInput' value={desc} onChange={(e)=>setDesc(e.target.value)}/>:(
+
+              <p>{fetchedPost.desc}
 
             </p>
-           
+            )}{updateMode&&
+            <button className="singlePostButton" onClick={handleUpdate}>Update</button>
+            }
         </div>
     </div>
   )
