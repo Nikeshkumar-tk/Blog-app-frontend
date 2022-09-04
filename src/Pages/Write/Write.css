@@ -70,3 +70,10 @@
     display: flex;
     align-items: center;
   }
+  .select{
+    margin-left: 10px;
+    float: right;
+    position: relative;
+    left: 1000px;
+    width: 200px;
+  }

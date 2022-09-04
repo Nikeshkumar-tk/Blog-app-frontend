@@ -10,9 +10,9 @@ const Post = ({post}) => {
      ) }
         <div className="postInfo">
             <div className="postCats">
-              {post.categories.map((c)=>(
-                <span className="postCat">{c.name}</span>
-              ))}
+             
+                <span className="postCat">{post.categories}</span>
+             
                 
                
             </div>

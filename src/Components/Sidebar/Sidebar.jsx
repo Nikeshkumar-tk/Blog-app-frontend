@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import './Sidebar.css'
 import axios from 'axios';
 import {Link} from "react-router-dom"
+import { Context } from '../../context/Context';
 
  const Sidebar = () => {
+  const {user}=useContext(Context)
   const [cats,setCats]=useState([])
   useEffect(()=>{
 const getCat=async()=>{
@@ -18,10 +20,10 @@ getCat()
     <div className="sidebar">
     <div className="sidebarItem">
       <span className="sidebarTitle">ABOUT ME</span>
-      <img
-        src="https://themegoods-cdn-pzbycso8wng.stackpathdns.com/grandblog/demo/wp-content/uploads/2015/11/aboutme.jpg"
+     { user&&<img
+        src={user.profilePic}
         alt=""
-      />
+      />}
       <p>
        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, dicta minus? Earum suscipit fuga tempora ipsam illo cumque excepturi asperiores, repellendus optio natus dicta facere voluptate sunt! Natus, itaque soluta.
 

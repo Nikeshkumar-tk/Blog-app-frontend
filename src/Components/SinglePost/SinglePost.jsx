@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import './SinglePost.css'
 import axios from 'axios'
 import { Context } from '../../context/Context';
+import Button from '@mui/material/Button';
 
 const SinglePost = () => {
   const location=useLocation()
@@ -14,6 +15,8 @@ const {user}=useContext(Context)
 const [title,setTitle]=useState("")
 const [updateMode,setUpdateMode]=useState(false)
 const [desc,setDesc]=useState("")
+const [audioLoading,setAudioLoading]=useState(false)
+const [audioUrl,setAudioUrl]=useState("")
   
   useEffect(()=>{
     const getPost=async()=>{
@@ -49,6 +52,26 @@ const handleUpdate=async()=>{
   window.location.reload()
 
 }
+const loadAudio=async()=>{
+  let encodedParams=new URLSearchParams()
+  encodedParams.append("voice_code", "en-US-1");
+  encodedParams.append("text", desc);
+
+await axios({
+  method:'POST',
+  url: 'https://cloudlabs-text-to-speech.p.rapidapi.com/synthesize',
+data:encodedParams,
+headers: {
+  'content-type': 'application/x-www-form-urlencoded',
+  'X-RapidAPI-Key': '39917aa29amshb5bebf0758c9345p197919jsn308218859cd1',
+  'X-RapidAPI-Host': 'cloudlabs-text-to-speech.p.rapidapi.com'
+}
+}).then((res)=>{
+  console.log(res)
+  setAudioUrl(res.data.result.audio_url)
+  setAudioLoading(true)
+})
+}
   
   return (
     <div className='singlePost'>
@@ -77,13 +100,17 @@ const handleUpdate=async()=>{
                   <b>{fetchedPost.username}</b>
                   </Link>
                   </span>
+                 <Button variant="contained" color="success" onClick={loadAudio}>
+                            Play audio
+                    </Button>
                 <span className="singlePostDate"><b>{new Date(fetchedPost.createdAt).toDateString()}</b></span>
             </div>
             {updateMode?<textarea className='singlePostDescInput' value={desc} onChange={(e)=>setDesc(e.target.value)}/>:(
-
+            <div>{audioLoading&&<audio controls>
+              <source src={audioUrl}></source></audio>}
               <p>{fetchedPost.desc}
 
-            </p>
+            </p></div>
             )}{updateMode&&
             <button className="singlePostButton" onClick={handleUpdate}>Update</button>
             }

@@ -19,6 +19,7 @@ const res=await axios.post("/auth/login",{
 
 })
 dispatch({type:"LOGIN_SUCESS",payload:res.data})
+console.log(user)
   }catch(err){
 dispatch({type:"LOGIN_FAILURE"})
   }

@@ -1,17 +1,23 @@
 import './Header.css'
+import Carousel from 'react-bootstrap/Carousel';
 
  const Header = () => {
   return (
     <div className="header">
-    <div className="headerTitles">
+ 
+    {/* <div className="headerTitles">
       <span className="headerTitleSm">React & Node</span>
       <span className="headerTitleLg">TECH BLOG</span>
-    </div>
-    <img
-      className="headerImg"
-      src="https://i.pinimg.com/564x/7d/eb/74/7deb74172032e24dc1f0af56be233dc5.jpg"
-      alt=""
-    />
+    </div><div class="container">
+  <h2 class="title">
+  
+    <span class="title-word title-word-2">TECH</span>
+    <span class="title-word title-word-3">BLOG</span>
+  </h2>
+</div> */}
+    
+  {/* <h1>hello</h1> */}
+  <h3>TECH SHARE</h3>
   </div>
   )
 }

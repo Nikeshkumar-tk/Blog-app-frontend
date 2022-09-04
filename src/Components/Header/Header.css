@@ -1,32 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Finlandica:ital,wght@1,400;1,500;1,600;1,700&family=Roboto:ital,wght@1,100&family=Rubik+Maze&family=Ubuntu:wght@300&display=swap');
 .header {
-    margin-top: 60px;
-  }
-  
-  .headerTitles {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: "Lora", serif;
-    color: #444;
-  }
-  
-  .headerTitleSm {
-    position: absolute;
-    top: 18%;
-    font-size: 20px;
-  }
-  
-  .headerTitleLg {
-    position: absolute;
-    top: 20%;
-    font-size: 100px;
-    color: rgb(115, 82, 193);
-  }
-  
-  .headerImg {
+    margin-top: 0px;
+    height: 70vh;
     width: 100%;
-    height: 450px;
-    margin-top: 80px;
-    object-fit: cover;
+   
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-image: url('https://images.pexels.com/photos/234527/pexels-photo-234527.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: white;
+    font-family:Rubik Maze;
+
   }
- 
+  .header h3{
+    position:relative;
+    
+    left: 50%;
+    top: 50%;
+    right: 50%;
+    font-size: 59px;
+    /* transform: translate(-50%,-50%); */
+  }
+  .header h3:hover{
+    color: #555;
+    cursor: zoom-in;
+  }
+  

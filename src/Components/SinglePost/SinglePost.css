@@ -53,6 +53,8 @@
   
   .singlePostAuthor{
     margin-left: 5px;
+    flex: 1;
+   
   }
   
   .singlePostDesc {
@@ -99,3 +101,12 @@
     align-self: flex-end;
     margin-top: 20px;
   }
+  .audioBtn {
+    float: right;
+    font-size: 16px;
+    margin: 10px;
+  }
+  .singlePostDate{
+    margin: 10px;
+  }
+  
