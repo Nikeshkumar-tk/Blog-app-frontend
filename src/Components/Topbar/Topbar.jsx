@@ -69,7 +69,7 @@ const  Topbar = () => {
           <li className="topListItem">
           <Link to='/about' className='link'>ABOUT</Link>
           </li>
-          <li className="topListItem"><Link to='/contact' className='link'>CONTACT</Link></li>
+          {/* <li className="topListItem"><Link to='/contact' className='link'>CONTACT</Link></li> */}
           <li className="topListItem">
 
           <Link to='/write' className='link'>WRITE</Link>
@@ -101,7 +101,7 @@ const  Topbar = () => {
             }
          
           
-      { searchMode?<div><input type='text' className='searchBox' placeholder='search' onChange={(e)=>setKey(e.target.value)}/><Link to={`/?cat=${key}&user=${key}`}><i className="iconWithBox fas fa-search" onClick={()=>setSearchMode(false)}></i></Link></div>:<i className="topSearchIcon fas fa-search" onClick={()=>setSearchMode(true)}></i>}
+      { searchMode?<div><input type='text' className='searchBox' placeholder='search' onChange={(e)=>setKey(e.target.value)} onMouseEnter={()=>console.log("hello world")}/><Link to={`/?cat=${key}&user=${key}`}><i className="iconWithBox fas fa-search" onClick={()=>setSearchMode(false)}></i></Link></div>:<i className="topSearchIcon fas fa-search" onClick={()=>setSearchMode(true)}></i>}
       </div>
     </div> 
   )

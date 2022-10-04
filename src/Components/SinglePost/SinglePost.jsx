@@ -14,6 +14,8 @@ const SinglePost = () => {
 const {user}=useContext(Context)
 const [title,setTitle]=useState("")
 const [updateMode,setUpdateMode]=useState(false)
+const PF = "http://localhost:5000/images/";
+
 const [desc,setDesc]=useState("")
 const [audioLoading,setAudioLoading]=useState(false)
 const [audioUrl,setAudioUrl]=useState("")

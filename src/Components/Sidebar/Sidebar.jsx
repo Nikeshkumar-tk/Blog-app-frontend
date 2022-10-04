@@ -25,7 +25,7 @@ getCat()
         alt=""
       />}
       <p>
-       Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, dicta minus? Earum suscipit fuga tempora ipsam illo cumque excepturi asperiores, repellendus optio natus dicta facere voluptate sunt! Natus, itaque soluta.
+      
 
       </p>
     </div>
@@ -33,7 +33,7 @@ getCat()
         <span className="sidebarTitle"> CATEGORIES</span>
             <ul className="sidebarList">
               {cats.map((c)=>(
-                <Link to={`/?cat=${c.name}`} className="link">
+                <Link to={`/?cat=${c.name}&user=${c.name}`} className="link">
                 
                 <li className="sidebarListItem">{c.name}</li>
                 </Link>

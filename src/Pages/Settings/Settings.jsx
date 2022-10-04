@@ -17,19 +17,20 @@ const Settings = () => {
   const {user,dispatch}=useContext(Context)
   const [imgUrl,setImgUrl]=useState("")
   const [oldUsername,setOldUsername]=useState("")
-  const updateData=async(imgData)=>{
+  const updateData=async(e)=>{
+    e.preventDefault()
     try{
-console.log(typeof(imgData))
 
       const res=await axios.put("/users/"+user._id,{
         userId:user._id,
         username:name,
         email:email,
         password:password,
-        profilePic:imgData,
+        profilePic:imgUrl,
       })
       console.log(res)
-      setImgUrl(res.data.profilePic)
+      setFile(res.data.profilePic)
+      // setImgUrl(res.data.profilePic)
       const res1=await updateUserName()
       console.log(res1)
       
@@ -47,24 +48,24 @@ await axios.put("/posts",{
   }
 
 
-  const handleSubmit=async(e)=>{
-    e.preventDefault()
+  const uploadImg=async(inputFile)=>{
     dispatch({ type: "UPDATE_START" });
     
-    const fileName=`${Date.now()}${file.name}`
+    const fileName=`${Date.now()}${inputFile.name}`
     const storageRef = ref(storage, fileName);
     console.log(fileName)
    
     
-   await uploadBytes(storageRef, file).then((snapshot) => {
+   await uploadBytes(storageRef, inputFile).then((snapshot) => {
       console.log(snapshot); })
       
       
      await getDownloadURL(ref(storage,fileName)).then((imgAdd)=>{
         console.log(imgAdd)
        
-        console.log(imgUrl)
-        updateData(imgAdd)
+       setImgUrl(imgAdd)
+       console.log(imgAdd)
+       
 
         
       })
@@ -77,14 +78,14 @@ await axios.put("/posts",{
           <span className="settingsTitleUpdate">Update your account</span>
           <span className="settingsTitleDelete">Delete your account</span>
         </div>
-        <form  className="settingsForm" onSubmit={handleSubmit}>
+        <form  className="settingsForm" onSubmit={updateData}>
           <label>profile picture</label>
           <div className="settingsPP">
             <img src={user.profilePic} alt="" />
             <label htmlFor="fileInput">
             <i class="settingsPPIcon fa-solid fa-user"></i>
             </label>
-            <input type="file" style={{display:"none"}} id="fileInput" onChange={(e)=>setFile(e.target.files[0])}/>
+            <input type="file" style={{display:"none"}} id="fileInput" onChange={(e)=>{setFile(e.target.files[0]);uploadImg(e.target.files[0])}} />
           </div>
           <label >USERNAME</label>
           <input type="text" placeholder={user.username} onChange={(e)=>{setOldUsername(user.username);setName(e.target.value)}}/>
